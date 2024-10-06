@@ -21,7 +21,6 @@ class CreateHistoriesTable extends Migration
             $table->integer('quantity');
             $table->string('image');
             $table->integer('total');
-            $table->datetime('date');
             $table->timestamps();
         });
     }

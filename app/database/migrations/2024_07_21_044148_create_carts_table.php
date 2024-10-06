@@ -19,6 +19,10 @@ class CreateCartsTable extends Migration
             $table->integer('item_id');
             $table->timestamps();
         });
+
+        Schema::table('carts', function (Blueprint $table) {
+            $table->integer('quantity')->default(1); // quantity カラムを追加
+        });
     }
 
     /**

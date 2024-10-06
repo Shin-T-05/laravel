@@ -11,13 +11,25 @@ class CreateGoodsTable extends Migration
      *
      * @return void
      */
+    //public function up()
+    //{
+        //Schema::create('goods', function (Blueprint $table) {
+            //$table->bigIncrements('id');
+            //$table->integer('user_id');
+            //$table->integer('item_id');
+            //$table->timestamps();
+        //});
+    //}
+
     public function up()
     {
         Schema::create('goods', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('user_id');
-            $table->integer('item_id');
+            $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // ユーザーID
+            $table->foreignId('post_id')->constrained()->onDelete('cascade'); // 投稿ID
             $table->timestamps();
+
+            $table->unique(['user_id', 'post_id']); // ユーザーと投稿の組み合わせはユニーク
         });
     }
 

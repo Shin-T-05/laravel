@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 
+use Carbon\Carbon;
+
 class HistoryTableSeeder extends Seeder
 {
     /**
@@ -11,6 +13,15 @@ class HistoryTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Models\History::class, 10)->create();
+        DB::table('histories')->insert([
+            'user_id' => 1,
+            'item_id' => 1,
+            'itemname' => 1,
+            'quantity' => 1,
+            'image' => 8,
+            'total' => 100,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
     }
 }

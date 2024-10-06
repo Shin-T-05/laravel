@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 
+use Carbon\Carbon;
+
 class ItemTableSeeder extends Seeder
 {
     /**
@@ -11,6 +13,14 @@ class ItemTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Models\Item::class, 10)->create();
+        DB::table('items')->insert([
+            'user_id' => 1,
+            'itemname' => 1,
+            'image' => 8,
+            'sentence' => 100,
+            'amount' => 1000,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
     }
 }

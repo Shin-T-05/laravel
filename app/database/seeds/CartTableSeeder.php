@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 
+use Carbon\Carbon;
+
 class CartTableSeeder extends Seeder
 {
     /**
@@ -11,6 +13,11 @@ class CartTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Models\Cart::class, 10)->create();
+        DB::table('carts')->insert([
+        'user_id' => 1,
+        'item_id' => 1,
+        'created_at' => Carbon::now(),
+        'updated_at' => Carbon::now(),
+        ]);
     }
 }

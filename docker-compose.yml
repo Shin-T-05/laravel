@@ -34,8 +34,8 @@ services:
       # 使用するDockerfile名の指定
       dockerfile: docker/php/Dockerfile
     volumes:
-    - ./app:/var/www/html
-    - ./docker/php/check_startup.sh:/tmp/check_startup.sh
+      - ./app:/var/www/html
+      - ./docker/php/check_startup.sh:/tmp/check_startup.sh
     # サーバーに対してオープンするポートを指定
     expose:
       - "9000"
@@ -69,3 +69,10 @@ services:
       - 4040:80
     volumes:
       - ./phpmyadmin/sessions:/sessions
+      
+  mail:
+    image: mailhog/mailhog
+    container_name: "mailhog"
+    # ポートフォワードの指定（ホスト側ポート：コンテナ側ポート）
+    ports:
+      - 8025:8025

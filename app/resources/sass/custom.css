@@ -1,0 +1,11 @@
+/* custom.css に追加 */
+/* ハートのデフォルトの色 */
+.js-like-toggle i {
+    color: gray; /* デフォルトの色（例: グレー） */
+    transition: color 0.3s ease;
+}
+
+/* いいね済み（lovedクラス）の場合の色 */
+.loved i {
+    color: red !important; /* いいね済みの色（例: 赤） */
+}
