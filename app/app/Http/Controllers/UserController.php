@@ -68,33 +68,42 @@ class UserController extends Controller
         return redirect('/mypage');
     }
 
-    // ユーザー情報の更新
     public function update(Request $request, $id)
-    {
-        // バリデーションルールの設定
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . $id,
-            'password' => 'nullable|string|min:6|confirmed',
-        ]);
+{
+    // バリデーションルールの設定
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|max:255|unique:users,email,' . $id,
+        'password' => 'nullable|string|min:6|confirmed',
+        'tel' => 'nullable|string|max:20',
+        'post' => 'nullable|string|max:10',
+        'address' => 'nullable|string|max:255',
+    ]);
 
-        // ユーザーの取得
-        $user = User::findOrFail($id);
-        
-        // 名前とメールアドレスの更新
-        $user->name = $request->name;
-        $user->email = $request->email;
+    // ユーザーの取得
+    $user = User::findOrFail($id);
 
-        // パスワードの更新（必要な場合のみ）
-        if ($request->filled('password')) {
-            $user->password = Hash::make($request->password);
-        }
+    // 名前とメールアドレスの更新
+    $user->name = $request->name;
+    $user->email = $request->email;
 
-        // ユーザー情報の保存
-        $user->save();
+    // 電話番号、郵便番号、住所の更新
+    $user->tel = $request->tel;
+    $user->post = $request->post;
+    $user->address = $request->address;
 
-        return view('/mypage');
+    // パスワードの更新（必要な場合のみ）
+    if ($request->filled('password')) {
+        $user->password = Hash::make($request->password);
     }
+
+    // ユーザー情報の保存
+    $user->save();
+
+    // マイページへリダイレクト
+    return view('/mypage');
+}
+
 
     public function destroy(User $user)
     {

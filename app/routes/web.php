@@ -27,6 +27,7 @@ use App\Http\Controllers\DisplayController;
 
 Auth::routes();
 
+Route::group(['middleware' => ['auth']], function () {
 Route::get('/business-top', [DisplayController::class, 'index'])->name('business-top');
 Route::get('/business-registration', [DisplayController::class, 'regi_index'])->name('business-registration');
 Route::get('/purchase', [DisplayController::class, 'pur_index'])->name('purchase');
@@ -60,5 +61,4 @@ Route::resource('users', UserController::class);//認証機能（AUTH）を書�
 Route::get('/purchase/complete', function () {
     return view('purchase-complete');
 })->name('purchase-complete');
-Route::group(['middleware' => ['auth']], function () {
 });
