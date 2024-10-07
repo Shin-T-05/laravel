@@ -17,10 +17,13 @@ class UserController extends Controller
 {
     
     // バリデーション
-    // $request->validate([
-    //     'item_id' => 'required|exists:items,id',
-    //     'quantity' => 'required|integer|min:1',
-    // ]);
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'tel' => ['required', 'regex:/^\d{2,4}-?\d{2,4}-?\d{4}$/'],  // ハイフンあり・なしを許可
+        'post' => ['required', 'regex:/^\d{3}-\d{4}$/'],  // 123-4567形式
+        'address' => 'required|string|max:255',
+    ]);
+    
 
     $user = auth()->user(); // 現在のユーザーを取得
     $cartItems = Cart::where('user_id', $user->id)->get(); // カートのアイテムを取得
