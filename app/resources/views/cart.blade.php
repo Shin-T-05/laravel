@@ -42,11 +42,17 @@
     <div class="text-right">
         <a href="{{ route('users.show', auth()->user()->id) }}" class="btn btn-primary">購入画面へ進む</a>
     </div>
-@else
-    <div class="alert alert-info">
-        カートに商品がありません。
-    </div>
-@endif
+    @else
+        <div class="alert alert-info">
+            カートに商品がありません。
+        </div>
+    @endif
 
+    <!-- トップに戻るリンクを追加 -->
+    <div class="d-flex align-items-center justify-content-center mt-3">
+        <a class="nav-link" href="http://127.0.0.1/items">
+            <i class="fas fa-home"></i> {{ __('トップに戻る') }}
+        </a>
+    </div>
 </div>
 @endsection

@@ -24,7 +24,9 @@
 
         <input type="hidden" name="item_id" value="{{ $item->id }}" /> {{-- item_id を隠しフィールドで渡す --}}
 
-        <button type="submit" class="btn btn-primary mt-3">レビューを投稿</button>
+        <button type="submit" class="btn btn-primary mt-3">
+            <i class="fas fa-paper-plane"></i> レビューを投稿
+        </button>
     </form>
 
     <div class="containers mt-4">

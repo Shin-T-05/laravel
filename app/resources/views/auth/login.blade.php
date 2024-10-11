@@ -68,18 +68,18 @@
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('ログイン') }}
+                                    <i class="fas fa-sign-in-alt"></i> {{ __('ログイン') }} <!-- アイコンを追加 -->
                                 </button>
 
                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('パスワード忘れた人へ') }}
+                                        <i class="fas fa-unlock-alt"></i> {{ __('パスワード忘れた人へ') }} <!-- アイコンを追加 -->
                                     </a>
                                 @endif
 
                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('business-top') }}">
-                                        {{ __('事業者はこちらから') }}
+                                        <i class="fas fa-briefcase"></i> {{ __('事業者はこちらから') }} <!-- アイコンを追加 -->
                                     </a>
                                 @endif
                             </div>

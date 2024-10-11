@@ -14,6 +14,8 @@ class ItemController extends Controller
 {
     // フィルタの処理を行う
     $query = Item::query();
+    // 商品が表示状態（likesが0）のもののみを取得
+    $query->where('likes', 0);
     // $data = [];
     // // ユーザの投稿の一覧を作成日時の降順で取得
     $item = Item::withCount('goods')->orderBy('created_at', 'desc')->paginate(10);
@@ -58,7 +60,6 @@ class ItemController extends Controller
 
 
 
-
     public function create()
     {
         
@@ -97,15 +98,54 @@ class ItemController extends Controller
     return view('item-detail', compact('item')); // 'item' 変数をビューに渡す
 }
 
-    public function edit($id)
-    {
-        
+public function edit($id)
+{
+    // 商品をIDで検索（存在しなければ404エラー）
+    $item = Item::findOrFail($id);
+
+    // 商品編集ビューに商品情報を渡す
+    return view('business-edit', compact('item'));
+}
+
+public function update(Request $request, $id)
+{
+    // バリデーションルールの設定
+    $request->validate([
+        'itemname' => 'required|string|max:255',
+        'amount' => 'required|numeric',
+        'sentence' => 'nullable|string',
+        'image' => 'nullable|image|max:2048', // 画像は2MBまで
+    ]);
+
+    // 商品の取得
+    $item = Item::findOrFail($id);
+
+    // 商品名、値段、説明文の更新
+    $item->itemname = $request->itemname;
+    $item->amount = $request->amount;
+    $item->sentence = $request->sentence;
+
+    // 画像の更新（新しい画像がアップロードされた場合のみ）
+    if ($request->hasFile('image')) {
+        // 既存の画像がある場合は削除
+        if ($item->image) {
+            \Storage::delete('public/' . $item->image);
+        }
+        // 新しい画像を保存し、パスをDBに保存
+        $path = $request->file('image')->store('items', 'public');
+        $item->image = $path;
     }
 
-    public function update(Request $request, $id)
-    {
-        
-    }
+    // 商品情報の保存
+    $item->save();
+
+    // 商品一覧を取得し、ビューに渡す
+    $items = Item::all(); // すべての商品を取得
+
+    // 商品一覧ページへリダイレクトし、itemsをビューに渡す
+    return view('business-item', compact('items')); // 'items'変数をビューに渡す
+}
+
 
     public function destroy($id)
     {

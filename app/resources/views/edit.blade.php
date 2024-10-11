@@ -63,7 +63,9 @@
 
                     <!-- 更新ボタン -->
                     <div class='row justify-content-center'>
-                        <button type='submit' class='btn btn-primary w-25 mt-3'>更新</button>
+                        <button type='submit' class='btn btn-primary w-25 mt-3'>
+                            <i class="fas fa-save"></i> 更新
+                        </button>
                     </div>
                 </form>
             </div>

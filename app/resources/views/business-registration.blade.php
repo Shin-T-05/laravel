@@ -24,7 +24,15 @@
         <input type="file" name="image" class="form-control" id="image" required>
     </div>
 
-    <button type="submit" class="btn btn-primary mt-3">登録する</button>
+    <button type="submit" class="btn btn-primary mt-3">
+        <i class="fas fa-plus"></i> {{ __('登録する') }} <!-- アイコンを追加 -->
+    </button>
+
+    <div class="d-flex align-items-center justify-content-center">
+        <a class="nav-link" href="{{ route('business-top') }}">
+            <i class="fas fa-arrow-circle-left"></i> {{ __('事業者トップに戻る') }} <!-- 戻るアイコン -->
+        </a>
+    </div>
 
     @if(session('success'))
         <div class="alert alert-success mt-3">
@@ -46,5 +54,5 @@
             </ul>
         </div>
     @endif
-</form>
+</form> 
 @endsection

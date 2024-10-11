@@ -1,7 +1,8 @@
 @extends('layouts.layout')
+
 @section('content')
-<div class = "d-flex align-items-center justify-content-center">
-    <div>ユーザー一覧</div>
+<div class="d-flex align-items-center justify-content-center">
+    <i class="fas fa-users"></i> {{ __('ユーザー一覧') }}
 </div>
 
 <table class='table'>
@@ -13,18 +14,19 @@
         </tr>
     </thead>
     <tbody>
-    <!-- ここに収入を表示する --><!--id→income-->
     @foreach($users as $user)
         <tr>
-            <th scope='col'>{{$user['name']}}</th>
-            <th scope='col'>{{$user['email']}}</th>
-            <th scope='col'>{{$user['tel']}}</th>
+            <td>{{$user['name']}}</td>
+            <td>{{$user['email']}}</td>
+            <td>{{$user['tel']}}</td>
         </tr>
     @endforeach
     </tbody>
 </table>
 
-<div class = "d-flex align-items-center justify-content-center">
-<a class="nav-link" href="{{ route('business-top') }}">{{ __('事業者トップに戻る') }}</a>
+<div class="d-flex align-items-center justify-content-center">
+    <a class="nav-link" href="{{ route('business-top') }}">
+        <i class="fas fa-arrow-circle-left"></i> {{ __('事業者トップに戻る') }} <!-- 戻るアイコン -->
+    </a>
 </div>
 @endsection

@@ -9,6 +9,7 @@
     <table class="table table-bordered">
         <thead>
             <tr>
+                <th>商品画像</th> {{-- 画像の列を追加 --}}
                 <th>商品名</th>
                 <th>数量</th>
                 <th>金額</th>
@@ -23,6 +24,11 @@
 
             @foreach($purchases as $purchase)
                 <tr>
+                    <td>
+                        @if($purchase->item->image) {{-- $purchaseからアイテムの画像を取得 --}}
+                            <img src="{{ asset('storage/' . $purchase->item->image) }}" alt="商品画像" style="width: 100px; height: auto;">
+                        @endif
+                    </td>
                     <td>{{ $purchase->itemname }}</td>
                     <td>{{ $purchase->quantity }}</td>
                     <td>{{ $purchase->total }}円</td>

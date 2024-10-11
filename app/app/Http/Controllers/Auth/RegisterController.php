@@ -62,12 +62,16 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
-    }
+    protected function create(array $data) 
+{
+    return User::create([
+        'name' => $data['name'],
+        'email' => $data['email'],
+        'password' => Hash::make($data['password']),
+        'tel' => $data['tel'], // 電話番号を追加
+        'post' => $data['post'], // 郵便番号を追加
+        'address' => $data['address'], // 住所を追加
+    ]);
+}
+
 }

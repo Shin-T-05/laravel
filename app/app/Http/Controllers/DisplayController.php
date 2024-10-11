@@ -91,6 +91,17 @@ class DisplayController extends Controller
 
     }
 
+    public function busiedit_index(){
+
+        // ログインしているユーザーの情報を取得
+        $user = Auth::item();
+
+        return view('business-edit',[
+            'item' => $item,
+        ]);
+
+    }
+
     public function busiuser_index(){
 
         $users = User::all();
@@ -152,6 +163,23 @@ class DisplayController extends Controller
 
     return view('review', compact('reviews', 'item')); // itemをビューに渡す
 }
+
+public function hide($id) 
+{
+    // 商品の取得
+    $item = Item::findOrFail($id);
+
+    // 商品を非表示にするためにlikesカラムを1に設定
+    $item->likes = 1;
+    $item->save();
+
+    // 全商品を取得する
+    $items = Item::all(); // 必要に応じて条件を指定してください
+
+    // 商品一覧ページにリダイレクトし、$itemsをビューに渡す
+    return view('business-item', compact('items')); 
+}
+
 
 
 }

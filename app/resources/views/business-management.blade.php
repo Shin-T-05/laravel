@@ -75,8 +75,10 @@
     </table>
 
     {{-- 事業者用トップ画面に戻るボタン --}}
-    <div class="mt-4">
-        <a href="{{ route('business-top') }}" class="btn btn-primary">事業者用トップ画面に戻る</a>
+    <div class="d-flex align-items-center justify-content-center">
+        <a class="nav-link" href="{{ route('business-top') }}">
+            <i class="fas fa-arrow-circle-left"></i> {{ __('事業者トップに戻る') }} <!-- 戻るアイコン -->
+        </a>
     </div>
 </div>
 @endsection

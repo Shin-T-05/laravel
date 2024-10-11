@@ -11,4 +11,5 @@
     @endif
     <p>ご購入ありがとうございます！</p>
 </div>
+<a class="nav-link" href="http://127.0.0.1/items">{{ __('トップに戻る') }}</a>
 @endsection

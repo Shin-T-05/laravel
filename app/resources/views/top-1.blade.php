@@ -2,8 +2,12 @@
 
 @section('content')
 <div class="d-flex align-items-center justify-content-center">
-    <a class="nav-link" href="{{ route('carts.store') }}">{{ __('カート画面') }}</a>
-    <a class="nav-link" href="{{ route('mypage') }}">{{ __('マイページ') }}</a>
+    <a class="nav-link" href="{{ route('carts.store') }}">
+        <i class="fas fa-shopping-cart"></i> {{ __('カート画面') }}
+    </a>
+    <a class="nav-link" href="{{ route('mypage') }}">
+        <i class="fas fa-user"></i> {{ __('マイページ') }}
+    </a>
 </div>
 <div class="all">
     <div class="container">
@@ -57,17 +61,18 @@
                         <div>
                             <a href="{{ route('reviews.show', $item->id) }}" class="btn btn-primary">詳細へ</a>
                         </div>
-                        @if($good_model->good_exist(Auth::user()->id, $item->id))
-                            <p class="favorite-marke">
-                                <a class="js-like-toggle loved" href="" data-itemid="{{ $item->id }}"><i class="fas fa-heart"></i></a>
-                                <span class="goodsCount">{{ $item->goods_count }}</span>
-                            </p>
-                        @else
-                            <p class="favorite-marke">
-                                <a class="js-like-toggle" href="" data-itemid="{{ $item->id }}"><i class="fas fa-heart"></i></a>
-                                <span class="goodsCount">{{ $item->goods_count }}</span>
-                            </p>
-                        @endif
+                        <p class="favorite-marke">
+                            @if(Auth::check() && $good_model->good_exist(Auth::user()->id, $item->id))
+                                <a class="js-like-toggle loved" href="" data-itemid="{{ $item->id }}">
+                                    <i class="fas fa-heart"></i>
+                                </a>
+                            @else
+                                <a class="js-like-toggle" href="" data-itemid="{{ $item->id }}">
+                                    <i class="fas fa-heart"></i>
+                                </a>
+                            @endif
+                            <span class="goodsCount">{{ $item->goods_count }}</span>
+                        </p>
                     </div>
                 @endforeach
             @endif
@@ -75,37 +80,38 @@
     </div>
 </div>
 @endsection
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
     $(function () {
-    var like = $('.js-like-toggle'); // いいねボタンを選択
-    var likeItemId; // いいねを付けるアイテムのIDを保存する変数
+        var like = $('.js-like-toggle'); // いいねボタンを選択
+        var likeItemId; // いいねを付けるアイテムのIDを保存する変数
 
-    like.on('click', function (e) { // いいねボタンがクリックされたときのイベントリスナー
-        e.preventDefault(); // デフォルトのリンク動作を防ぐ
-        var $this = $(this); // クリックされた要素をjQueryオブジェクトとして保存
-        likeItemId = $this.data('itemid'); // data属性からアイテムIDを取得
+        like.on('click', function (e) { // いいねボタンがクリックされたときのイベントリスナー
+            e.preventDefault(); // デフォルトのリンク動作を防ぐ
+            var $this = $(this); // クリックされた要素をjQueryオブジェクトとして保存
+            likeItemId = $this.data('itemid'); // data属性からアイテムIDを取得
 
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRFトークンをヘッダーに追加
-            },
-            url: '/ajaxlike',  // AJAXリクエストを送信するURL
-            type: 'POST', // リクエストのタイプ（POST）
-            data: {
-                'item_id': likeItemId // コントローラーに渡すパラメーター
-            },
-        })
-        .done(function (data) { // AJAXリクエストが成功した場合の処理
-            $this.toggleClass('loved'); // lovedクラスを追加または削除
-            $this.next('.goodsCount').html(data.itemGoodsCount); // いいね数を更新
-        })
-        .fail(function (data, xhr, err) { // AJAXリクエストが失敗した場合の処理
-            console.log('エラー'); // エラーメッセージを表示
-            console.log(err); // エラー内容を表示
-            console.log(xhr); // XMLHttpRequestオブジェクトを表示
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRFトークンをヘッダーに追加
+                },
+                url: '/ajaxlike',  // AJAXリクエストを送信するURL
+                type: 'POST', // リクエストのタイプ（POST）
+                data: {
+                    'item_id': likeItemId // コントローラーに渡すパラメーター
+                },
+            })
+            .done(function (data) { // AJAXリクエストが成功した場合の処理
+                $this.toggleClass('loved'); // lovedクラスを追加または削除
+                $this.next('.goodsCount').html(data.itemGoodsCount); // いいね数を更新
+            })
+            .fail(function (data, xhr, err) { // AJAXリクエストが失敗した場合の処理
+                console.log('エラー'); // エラーメッセージを表示
+                console.log(err); // エラー内容を表示
+                console.log(xhr); // XMLHttpRequestオブジェクトを表示
+            });
+            return false; // デフォルトのフォーム送信を防ぐ
         });
-        return false; // デフォルトのフォーム送信を防ぐ
     });
-});
 </script>
